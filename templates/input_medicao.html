@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% load static %} 
+
+{% block title %}Importar Dados{% endblock %}
+
+{% block content %}
+
+
+<style>
+  body {
+      margin: 0;
+      height: 100vh;
+      background-size: cover; 
+      background-position: center;
+      background-repeat: no-repeat; 
+  }
+  .texto-direita {
+      font-family: sans-serif;
+      color: #0000FF;
+  }
+.container {
+  display: flex;
+  justify-content: space-around;
+  margin: 50px;
+  margin-top: 100px;
+  margin-left: 50px;
+}
+canvas {
+  width: 450px; 
+  height: 450px;
+}
+
+.table-responsive {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  max-width: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-collapse: collapse;
+  font-size: 8px;
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #f2f2f2;
+}
+
+@media (max-width: 767px) {
+  .table {
+    font-size: 4px;
+  }
+  
+  .table th,
+  .table td {
+    padding: 6px;
+  }
+}
+</style>
+
+  <div class="row" style="text-align: left;">
+  </div >
+  <img style="width: 150px;" src="{% static 'images/Logo_footer_TGN.JPG'%}" alt="">
+  <br>
+  <br>
+        <div class="container-fluid">
+            <div class="row" style="margin-left: 50px;">
+              <form class="form-horizontal" action="{% url 'input_med' %}" method="post">
+                {% csrf_token %}
+                  <div class="row">
+                     <div class="col-sm-3">
+                      <div class="form-group">
+                        <label><b>Clientes</b></label>
+                        <select class="form-control" name="cliente">
+                          {% for cliente in clientes %}
+                          <option value="{{cliente.nome}}">{{ cliente}}</option>
+                          {% endfor %}
+                        </select>
+                        
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label class="control-label" for="inicio"><b>Volume Total</b></label>
+                        <input id="volume_total" name="volume_total" type="text" placeholder="Volume Total" class="form-control">
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label class="control-label" for="valor"><b>Total a pagar sem ICMS</b></label>
+                        <input id="total_s_icms" name="total_s_icms" type="text" placeholder="Total a pagar sem ICMS" class="form-control">
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label class="control-label" for="fator"><b>Consumo/MWh</b></label>
+                        <input id="consumo_mwh" name="consumo_mwh" type="text" placeholder="Consumo/MWh" class="form-control">
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label class="control-label" for="consumo"><b>Consumo + Perdas (3,0%)</b></label>
+                        <input id="consumo_perda" name="consumo_perda" type="text" placeholder="Consumo + Perdas (3,0%)" class="form-control">
+                      </div>
+
+
+                     </div>
+                   <div class="col-sm-3">
+                    <div class="form-group">
+                      <label class="control-label" for="custo"><b>Percentual de Atendimento</b></label>
+                      <input id="percentual" name="percentual" type="text" placeholder="Percentual de Atendimento" class="form-control">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                      <label class="control-label" for="concessionaria"><b>PROINFA</b></label>
+                      <input id="proinfa" name="proinfa" type="text" placeholder="PROINFA" class="form-control">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                      <label class="control-label" for="concessionaria"><b>Consumo + Perdas (3,0%) - PROINFA</b></label>
+                      <input id="consumo_perda_p" name="consumo_perda_p" type="text" placeholder="Consumo + Perdas (3,0%) - PROINFA" class="form-control">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                      <label class="control-label" for="concessionaria"><b>Código do Contrato</b></label>
+                      <input id="codigo" name="codigo" type="text" placeholder="Código do Contrato" class="form-control">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                      <label class="control-label" for="concessionaria"><b>Quantidade Contratada/MWh</b></label>
+                      <input id="c2" name="qtd_contrat" type="text" placeholder="Quantidade Contratada/MWh" class="form-control">
+                    </div>
+                    <br>
+
+
+                     </div>
+                     <div class="col-sm-3">
+                      <div class="form-group">
+                        <label class="control-label" for="custo"><b>Flexibilidade Mínima/MWh</b></label>
+                        <input id="flex_min" name="flex_min" type="text" placeholder="Flexibilidade Mínima/MWh" class="form-control">
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label class="control-label" for="concessionaria"><b>Flexibilidade Máxima/MWh</b></label>
+                        <input id="flex_max" name="flex_max" type="text" placeholder="Flexibilidade Máxima/MWh" class="form-control">
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label class="control-label" for="concessionaria"><b>Contrato Longo Prazo</b></label>
+                        <input id="contrato_longo" name="contrato_longo" type="text" placeholder="Contrato Longo Prazo" class="form-control">
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label class="control-label" for="concessionaria"><b>Preço (R$/MWh)</b></label>
+                        <input id="preco" name="preco" type="text" placeholder="Preço (R$/MWh)" class="form-control">
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label class="control-label" for="concessionaria"><b>Total sem ICMS</b></label>
+                        <input id="total_sem_icms" name="total_sem_icms" type="text" placeholder="Total sem ICMS" class="form-control">
+                      </div>
+                      <br>
+  
+  
+                       </div>
+                       <div class="col-sm-3">
+                        <div class="form-group">
+                          <label class="control-label" for="custo"><b>Preço (R$/MWh)</b></label>
+                          <input id="preco_r" name="preco_r" type="text" placeholder="Preço (R$/MWh)" class="form-control">
+                        </div>
+                        <br>
+                        <div class="form-group">
+                          <label class="control-label" for="concessionaria"><b>Encargos</b></label>
+                          <input id="encargos" name="encargos" type="text" placeholder="Encargos" class="form-control">
+                        </div>
+                        <br>
+                        <div class="form-group">
+                          <label class="control-label" for="concessionaria"><b>Valor total da nota sem ICMS</b></label>
+                          <input id="valor_nf" name="valor_nf" type="text" placeholder="Valor total da nota sem ICMS" class="form-control">
+                        </div>
+                        <!-- <br>
+                        <div class="form-group">
+                          <label class="control-label" for="concessionaria"><b>Concessionária</b></label>
+                          <input id="c13" name="concessionaria" type="text" placeholder="Concessionária" class="form-control">
+                        </div>
+                        <br>
+                        <div class="form-group">
+                          <label class="control-label" for="concessionaria"><b>Concessionária</b></label>
+                          <input id="c14" name="concessionaria" type="text" placeholder="Concessionária" class="form-control">
+                        </div> -->
+                        <br>
+
+                        <div class="form-group">
+                          <div class="col-md-6 col-md-offset-3">
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                          </div>
+                        </div>
+    
+    
+                         </div>
+
+               </div>
+
+
+              </form>
+            </div>
+          </div>
+
+
+
+<footer>
+  <button type="button" class="btn btn-sm btn-link"><a href="{%url 'importacoes' %}">Próximo</a></button>
+</footer>
+
+
+{% endblock %}

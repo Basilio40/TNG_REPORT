@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% load static %} 
+
+{% block title %}Importar Dados{% endblock %}
+
+{% block content %}
+<style>
+  body {
+      margin: 0;
+      height: 100vh;
+      /*background-image: url('{% static "images/faturamento.jpg" %}'); /* Usando a tag static para referenciar a imagem */
+      background-size: cover; /* Faz com que a imagem cubra todo o fundo */
+      background-position: center; /* Centraliza a imagem */
+      background-repeat: no-repeat; /* Não repete a imagem */
+  }
+  .texto-direita {
+      /*position: absolute; /* Permite posicionar o texto à direita */
+      /*right: 20px; /* Distância da borda direita */
+      /*top: 50%; /* Centraliza verticalmente */
+      /*transform: translateY(-50%); /* Ajusta para centralizar corretamente */
+      /*font-size: 30px; /* Tamanho da fonte */
+      /*padding: 10px; /* Espaçamento interno */
+      font-family: sans-serif;
+      color: #0000FF;
+  }
+.container {
+  position:absolute;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin-top: 40px;
+  
+}
+
+.table-responsive {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  max-width: 100%;
+  color: white;
+  font-size: 8px;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  font-size: 10px;
+  border: none;
+  line-height: 1;
+  padding: 2px;
+  margin: 0;
+}
+
+.table td.col1 {
+  width: 10px; /* Largura da primeira coluna */
+}
+
+.table td.col2 {
+  width: 100px; /* Largura da segunda coluna */
+}
+
+.table td.col3 {
+  width: 150px; /* Largura da terceira coluna */
+}
+
+.table th {
+  background-color: #f2f2f2;
+  text-align: center;
+}
+
+</style>
+<!-- <h1 style="color:#0000FF"><b>FATURAMENTO</b></h1> -->
+
+<div class="container">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Importar</button>
+    <button type="submit" class="btn btn-warning"><a href="{%url 'grafico_historico' %}">Próximo</a></button>
+  </form>
+</div>
+
+  <div >
+    <footer >
+    </footer>
+</div>
+{% endblock %}

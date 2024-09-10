@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% load static %} 
+
+{% block title %}Importar Dados{% endblock %}
+
+{% block content %}
+
+
+<style>
+  body {
+      margin: 0;
+      height: 100vh;
+      background-image: url('{% static "images/mod4.jpg" %}');
+      background-size: cover; 
+      background-position: center;
+      background-repeat: no-repeat; 
+  }
+  .texto-direita {
+      font-family: sans-serif;
+      color: #0000FF;
+  }
+.container {
+  display: flex;
+  justify-content: space-around;
+  margin: 50px;
+  margin-top: 100px;
+}
+canvas {
+  width: 450px; 
+  height: 450px;
+}
+
+.table-responsive {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  max-width: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-collapse: collapse;
+  font-size: 8px;
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #f2f2f2;
+}
+
+@media (max-width: 767px) {
+  .table {
+    font-size: 4px;
+  }
+  
+  .table th,
+  .table td {
+    padding: 6px;
+  }
+}
+</style>
+
+<div class="conatiner-fluid">
+  <div class="row" style="text-align: center;">
+    <br>
+    <br>
+    <br>
+  </div >
+  <h2 style="text-align: center;"><b>{{fatura.mes}} / {{fatura.ano}}</b> </h2>
+
+  <div class="row">
+      <div class="col-md-6">
+        <canvas id="historico_fatura"></canvas>
+        <h3>Hitórico de Faturas</h3>
+        <br>
+      </div>
+      <div class="col-md-6">
+        <canvas id="demanda_mensal"></canvas>
+        <h3>Demandas Máximas</h3>
+        <br>
+      </div>
+  </div>
+</div>
+<div class="row">
+  <div col-md-3 style="margin-left: 30px;color:white;margin-top:100px;"><b>Leitura</b></div>
+  {% for item in dados_fatura %}
+  <div col-md-3 style="margin-left: 30px;color:white"><b>{{item.inicio_leitura}}</b></div>
+  <div col-md-3 style="margin-left: 30px;color:white"><b>{{item.fim_leitura}}</b></div>
+
+  </div>
+<div class="row">
+  <div class="col-md-12">
+<div style="margin-left: 230px;color:white;margin-top:-130px;">
+<b>Valor</b></div>
+<div style="margin-left: 230px;color:white;"><b>{{item.valor}}</b></div>
+<div style="margin-left: 230px;color:white;margin-top: 30px;">
+  <b>Fator de Carga</b></div>
+  <div style="margin-left: 230px;color:white;">{{item.fator_carga}}</div>
+  <div style="margin-left: 450px;color:white;margin-top:-130px;">
+    <b>Consumo</b></div>
+    <div style="margin-left: 450px;color:white;"><b>{{item.consumo}}</b></div>
+    <div style="margin-left: 450px;color:white;margin-top: 30px;">
+      <b>Custo Médio</b></div>
+    <div style="margin-left: 450px;color:white;">{{item.custo_medio}}</div>
+    <div style="margin-left: 680px;color:white;margin-top:-120px;">
+      {% for cliente in clientes%}    
+      <b>Tarifa </b> <br>{{cliente.grupo}} - {{cliente.modalidade}} </div>
+      <br>
+      <br>
+    <div style="margin-left: 680px;color:white;margin-top:-30px;">
+      <b>Concecionaria </b> <br> {{cliente.distribuidora}} </div>
+      {%endfor%}
+{%endfor%}
+</div>
+</div>
+
+
+<footer>
+  <button type="button" class="btn btn-sm btn-link"><a href="{%url 'grafico_custo' %}">Próximo</a></button>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/graf.js' %}"></script>
+<script>
+  window.onload = function(e){
+    renderiza_historico_fatura('{% url "historico_fatura" %}')
+    renderiza_demanda_mensal('{% url "demanda_mensal" %}')
+  
+
+  }
+
+</script>
+{% endblock %}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% load static %} 
+
+{% block title %}Importar Dados{% endblock %}
+
+{% block content %}
+<html lang="pt-br">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-image: url('{% static "images/mod6.jpg" %}'); /* Usando a tag static para referenciar a imagem */
+            background-size: cover; /* Faz com que a imagem cubra todo o fundo */
+            background-position: center; /* Centraliza a imagem */
+            background-repeat: no-repeat; /* Não repete a imagem */
+        }
+        p {
+            color: white;
+            font-family: "Goudy Bookletter 1911", sans-serif;
+            font-size: 12px;
+        }
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      
+      .table-responsive {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+      }
+      
+      .table {
+        width: 100%;
+        max-width: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-collapse: collapse;
+        font-size: 8px;
+      }
+      
+      .table th,
+      .table td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      
+      .table th {
+        background-color: #f2f2f2;
+      }
+      
+      @media (max-width: 767px) {
+        .table {
+          font-size: 4px;
+        }
+        
+        .table th,
+        .table td {
+          padding: 6px;
+        }
+      }
+      </style>
+<body>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <p style="margin-left:70px; margin-top:23px;">{{clientes}}</p>
+    <p style="margin-left:450px;margin-top:-32px;">05/2024</p>
+    {% for item in medicao %}
+    <p style="margin-left:610px;margin-top:-33px;">{{item.volume_total}}</p>
+    <p style="margin-left:810px;margin-top:-35px;">{{item.total_s_icms}}</p>
+    <br>
+    <p style="margin-left:60px; margin-top:35px;font-size: 8px;">{{clientes}}</p>
+    <p style="margin-left:280px; margin-top:-32px;">{{item.consumo_mwh}}</p>
+    <p style="margin-left:420px; margin-top:-32px;">{{item.consumo_perda}}</p>
+    <p style="margin-left:580px; margin-top:-35px;">{{item.percentual}}</p>
+    <p style="margin-left:710px; margin-top:-35px;">{{item.proinfa}}</p>
+    <p style="margin-left:830px; margin-top:-35px;">{{item.consumo_perda_p}}</p>
+    <br>
+    <br>
+    <p style="margin-left:100px; margin-top:15px;">{{item.codigo}}</p>
+    <p style="margin-left:380px; margin-top:-35px;">{{item.qtd_contrat}}</p>
+    <p style="margin-left:610px; margin-top:-35px;">{{item.flex_min}}</p>
+    <p style="margin-left:850px; margin-top:-35px;">{{item.flex_max}}</p>
+    <br>
+    <p style="margin-left:100px; margin-top:-17px;">{{item.contrato_longo}}</p>
+    <p style="margin-left:380px; margin-top:-39px;">{{item.consumo_perda_p}}</p>
+    <p style="margin-left:610px; margin-top:-32px;">{{item.preco}}</p>
+    <p style="margin-left:850px; margin-top:-35px;">{{item.total_sem_icms}}</p>
+    <br>
+    <br>
+    <br>
+    <p style="margin-left:45px; margin-top:-5px; font-size:08px;">{{item.cliente}}</p>
+    <p style="margin-left:290px; margin-top:-35px;">{{item.consumo_perda_p}}</p>
+    <p style="margin-left:420px; margin-top:-32px;">{{item.preco}}</p>
+    <p style="margin-left:600px; margin-top:-35px;">{{item.total_sem_icms}}</p>
+    <p style="margin-left:715px; margin-top:-35px;">{{item.encargos}}</p>
+    <p style="margin-left:850px; margin-top:-35px;">{{item.valor_nf}}</p>
+    {% endfor %}
+
+</body>
+<footer>
+  <button type="button" class="btn btn-sm btn-link"><a href="{%url 'faturamento' %}">Próximo</a></button>
+</footer>
+</html>
+{% endblock %}

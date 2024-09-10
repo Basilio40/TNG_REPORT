@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% load static %} 
+
+{% block title %}Importar Dados{% endblock %}
+
+{% block content %}
+<style>
+  body {
+      margin: 0;
+      height: 100vh;
+      /*background-image: url('{% static "images/mod1.jpg" %}'); /* Usando a tag static para referenciar a imagem */
+      background-size: cover; /* Faz com que a imagem cubra todo o fundo */
+      background-position: center; /* Centraliza a imagem */
+      background-repeat: no-repeat; /* Não repete a imagem */
+  }
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.table-responsive {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  max-width: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-collapse: collapse;
+  font-size: 8px;
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #f2f2f2;
+}
+
+@media (max-width: 767px) {
+  .table {
+    font-size: 4px;
+  }
+  
+  .table th,
+  .table td {
+    padding: 6px;
+  }
+}
+</style>
+
+
+  
+  <div class="container-fluid">
+    <div class="row">
+      <img src="http://127.0.0.1:8000/media/mod1.jpeg" alt="Capa">
+    </div>
+
+    <div class="row" style="margin-top: 300px;">
+    <img src="http://127.0.0.1:8000/media/capturas/historico_screenshot.png" alt="Capa">
+    </div>
+
+    <div class="row" style="margin-top: 300px;">
+    <img src="http://127.0.0.1:8000/media/capturas/abertura_screenshot.png" alt="Capa">
+    </div>
+
+    <div class="row" style="margin-top: 300px;">
+    <img src="http://127.0.0.1:8000/media/capturas/graf_hist_screenshot.png" alt="Capa">
+    </div>
+
+    <div class="row" style="margin-top: 300px;">
+    <img src="http://127.0.0.1:8000/media/capturas/graf_custo_screenshot.png" alt="Capa">
+    </div>
+
+    <div class="row" style="margin-top: 350px;">
+    <img src="http://127.0.0.1:8000/media/capturas/medicao_fat_screenshot.png" alt="Capa">
+    </div>
+
+    <div class="row" style="margin-top: 350px;">
+    <img src="http://127.0.0.1:8000/media/capturas/faturamento_screenshot.png" alt="Capa">
+    </div>
+
+    <div class="row" style="margin-top: 350px;">
+    <img src="http://127.0.0.1:8000/media/capturas/simulacao_screenshot.png" alt="Capa">
+    </div>
+
+    <div class="row" style="margin-top: 350px;">
+    <img src="http://127.0.0.1:8000/media/capturas/graf_economia_screenshot.png" alt="Capa">
+    </div>
+
+    <div class="row" style="margin-top: 350px;">
+    <img src="http://127.0.0.1:8000/media/capturas/final_screenshot.png" alt="Capa">
+    </div>
+
+</div>
+<footer>
+  <a href="{%url 'historico' %}">[=]</a>
+</footer>
+{% endblock %}

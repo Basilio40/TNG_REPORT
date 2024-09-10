@@ -1,0 +1,1 @@
+web: gunicorn 'TNG.wsgi.application'

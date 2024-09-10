@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% load static %} 
+
+{% block title %}Importar Dados{% endblock %}
+
+{% block content %}
+
+
+<style>
+  body {
+      margin: 0;
+      height: 100vh;
+      background-size: cover; 
+      background-position: center;
+      background-repeat: no-repeat; 
+  }
+  .texto-direita {
+      font-family: sans-serif;
+      color: #0000FF;
+  }
+.container {
+  display: flex;
+  justify-content: space-around;
+  margin: 50px;
+  margin-top: 100px;
+  margin-left: 50px;
+}
+canvas {
+  width: 450px; 
+  height: 450px;
+}
+
+.table-responsive {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  max-width: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-collapse: collapse;
+  font-size: 8px;
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #f2f2f2;
+}
+
+@media (max-width: 767px) {
+  .table {
+    font-size: 4px;
+  }
+  
+  .table th,
+  .table td {
+    padding: 6px;
+  }
+}
+</style>
+
+  <div class="row" style="text-align: left;">
+  </div >
+  <img style="width: 150px;" src="{% static 'images/Logo_footer_TGN.JPG'%}" alt="">
+  <br>
+  <br>
+        <div class="container-fluid">
+            <div class="row" style="margin-left: 50px;">
+              <form class="form-horizontal" action="{% url 'input_econ' %}" method="post">
+                {% csrf_token %}
+                  <div class="row">
+                     <div class="col-sm-6">
+                      <div class="form-group">
+                        <label><b>Clientes</b></label>
+                        <select class="form-control" name="cliente">
+                          {% for cliente in clientes %}
+                          <option value="{{cliente.nome}}">{{ cliente}}</option>
+                          {% endfor %}
+                        </select>
+                        
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label class="control-label" for="inicio"><b>ENEL TRADING</b></label>
+                        <input id="enel_trad" name="enel_trad" type="text" placeholder="ENEL TRADING" class="form-control">
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label class="control-label" for="valor"><b>Cativo Total</b></label>
+                        <input id="cat_total" name="cat_total" type="text" placeholder="Cativo Total" class="form-control">
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label class="control-label" for="fator"><b>Cativo Faturamento</b></label>
+                        <input id="cat_fat" name="cat_fat" type="text" placeholder="Fator de Carga" class="form-control">
+                      </div>
+                     <br>
+                    <div class="form-group">
+                      <div class="col-md-6 col-md-offset-3">
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                      </div>
+                    </div>
+
+                     </div>
+
+               </div>
+
+
+              </form>
+            </div>
+          </div>
+
+
+
+<footer>
+    <button type="button" class="btn btn-sm btn-link"><a href="{%url 'economia' %}">Próximo</a></button>
+</footer>
+
+
+{% endblock %}

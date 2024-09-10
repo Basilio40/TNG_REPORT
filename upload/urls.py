@@ -1,0 +1,60 @@
+from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+from .views import (
+    ImportarDadosView,
+    ImportarSimulacaoView,
+    capa,
+    historico,
+    abertura,
+    final,
+    Graf1View,
+    Graf2View,
+    faturamento_mensal,
+    custo_mensal,
+    historico_fatura,
+    demanda_mensal,
+    gerar_pdf,
+    render_to_pdf,
+    capturar_imagem,
+    medicao_fat,
+    simulacao,
+    input_dados_fat,
+    input_medicao,
+    economia,
+    dados_economia,
+    input_economia,
+    relatorio,
+    faturamento,
+    gerar_relatorio,
+)
+
+urlpatterns = [
+    path('importar', ImportarDadosView.as_view(),name='importar_dados'),
+    path('importacoes', ImportarSimulacaoView.as_view(),name='importacoes'),
+    path('capa',capa,name='capa'),
+    path('historico',historico,name='historico'),
+    path('abertura',abertura,name='abertura'),
+    path('final',final,name='final'),
+    path('input_fat',input_dados_fat,name='input_fat'),
+    path('graf_hist',Graf1View.as_view(),name='grafico_historico'),
+    path('graf_custo',Graf2View.as_view(),name='grafico_custo'),
+    path('graf_economia',economia,name='economia'),
+    path('economia',dados_economia,name='dados_econ'),
+    path('input_econ',input_economia,name='input_econ'),
+    path('faturamento',faturamento,name='faturamento'),
+    path('faturamento_mensal',faturamento_mensal,name='faturamento_mensal'),
+    path('custo_mensal',custo_mensal,name='custo_mensal'),
+    path('historico_fatura',historico_fatura,name='historico_fatura'),
+    path('demanda_mensal',demanda_mensal,name='demanda_mensal'),
+    path('input_med',input_medicao,name='input_med'),
+    path('medicao_fat', medicao_fat, name='medicao_faturamento'),
+    path('simulacao', simulacao,name='simulacao'),
+    path('gerar_pdf',gerar_pdf, name='gerar_pdf'),
+    path('render_to_pdf',render_to_pdf, name='render_to_pdf'),
+    path('capturar-imagem/', capturar_imagem, name='capturar_imagem'),
+    path('relatorio', relatorio, name='relatorio'),
+    path('gerar_relatorio', gerar_relatorio, name='gerar_relatorio')
+]
+
+urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
