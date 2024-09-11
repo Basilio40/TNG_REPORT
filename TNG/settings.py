@@ -89,19 +89,6 @@ WSGI_APPLICATION = 'TNG.wsgi.application'
 #     }
 # }
 
-# DATABASE_URL='postgresql://postgres:MuvGcjALGMvEBMsTJGVudEFISwjNpMeJ@meticulous-empathy.railway.internal:5432/railway'
-
-# if not DATABASE_URL:
-#     raise ValueError("A variável de ambiente DATABASE_URL não está definida.")
-
-# # Configurar o banco de dados
-# DATABASES = {
-#     'default': dj_database_url.config(default=DATABASE_URL)
-# }
-
-# POSTGRES_LOCALLY = True
-# if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
-#     DATABASES['default'] = dj_database_url.parse(os.getenv('DATABASE_URL'))
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -190,7 +177,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_ROOT = os.path.join('staticfiles')
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 # Default primary key field type

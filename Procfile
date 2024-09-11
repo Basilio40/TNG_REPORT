@@ -1,1 +1,1 @@
-web: gunicorn 'TNG.wsgi.application'
+web: gunicorn TNG.wsgi --log-file -
