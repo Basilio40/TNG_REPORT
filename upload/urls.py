@@ -27,13 +27,14 @@ from .views import (
     relatorio,
     faturamento,
     gerar_relatorio,
-    index,
     login,
+    logout,
 )
 
+
 urlpatterns = [
-    path("", index, name="index"),
     path("login", login, name="login"),
+    path("logout", logout, name="logout"),
     path("importar", ImportarDadosView.as_view(), name="importar_dados"),
     path("importacoes", ImportarSimulacaoView.as_view(), name="importacoes"),
     path("capa", capa, name="capa"),

@@ -1,11 +1,15 @@
 from io import BytesIO
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from django.conf import settings
 import pandas as pd
+from django.contrib.auth import logout as auth_logout
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import TemplateView
-from .forms import ImportarDadosForm, ImportarSimulacaoForm
+from .forms import ImportarDadosForm, ImportarSimulacaoForm, LoginForm
 from django.http import FileResponse, JsonResponse, HttpResponse
+from django.contrib.auth import authenticate, login as auth_login
 from .models import (
     Cliente,
     Conta,
@@ -14,6 +18,7 @@ from .models import (
     DadosFatura,
     DadosMedicao,
     DadosEconomia,
+    Login,
 )
 from django.db.models import Sum, Count
 from xhtml2pdf import pisa
@@ -40,6 +45,7 @@ import os
 class ImportarDadosView(View):
     template_name = "importar_dados.html"
 
+    @method_decorator(login_required)
     def get(self, request):
         clientes = Cliente.objects.all()
         conta = Conta.objects.all()
@@ -50,6 +56,7 @@ class ImportarDadosView(View):
             {"form": form, "clientes": clientes, "conta": conta},
         )
 
+    @method_decorator(login_required)
     def post(self, request):
         form = ImportarDadosForm(request.POST, request.FILES)
 
@@ -90,6 +97,7 @@ class ImportarDadosView(View):
 class ImportarSimulacaoView(View):
     template_name = "importacoes.html"
 
+    @method_decorator(login_required)
     def get(self, request):
         clientes = Cliente.objects.all()
         simulacao = Simulacao.objects.all()
@@ -141,10 +149,12 @@ def relatorio(request):
     return render(request, "relatorio.html")
 
 
+@login_required
 def historico(request):
     return render(request, "historico.html")
 
 
+@login_required
 def abertura(request):
     cliente = Cliente.objects.last()
     return render(request, "abertura_relat.html", {"cliente": cliente})
@@ -153,6 +163,7 @@ def abertura(request):
 class Graf1View(View):
     template_name = "graf_hist.html"
 
+    @method_decorator(login_required)
     def get(self, request):
         clientes = Cliente.objects.all()
         conta = Conta.objects.all()
@@ -185,6 +196,7 @@ def faturamento(request):
     return render(request, "faturamento.html", {"clientes": clientes, "conta": conta})
 
 
+@login_required
 def input_dados_fat(request):
     clientes = Cliente.objects.all()
     if request.method == "GET":
@@ -543,9 +555,27 @@ def capturar_imagem(request):
     return HttpResponse(response_content, content_type="text/plain")
 
 
-def index(request):
-    return render(request, "index.html")
-
-
 def login(request):
-    return render(request, "login.html")
+    if request.user.is_authenticated:
+        return redirect("historico")
+
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                auth_login(request, user)
+                return redirect("login")
+            form.add_error(None, "Usuário ou senha inválidos")
+
+    else:
+        form = LoginForm()
+
+    return render(request, "login.html", {"form": form})
+
+
+def logout(request):
+    auth_logout(request)
+    return redirect("login")
