@@ -112,13 +112,11 @@ canvas {
       <b>Custo Médio</b></div>
     <div style="margin-left: 450px;color:white;">{{item.custo_medio}}</div>
     <div style="margin-left: 680px;color:white;margin-top:-120px;">
-      {% for cliente in clientes%}    
       <b>Tarifa </b> <br>{{cliente.grupo}} - {{cliente.modalidade}} </div>
       <br>
       <br>
     <div style="margin-left: 680px;color:white;margin-top:-30px;">
       <b>Concecionaria </b> <br> {{cliente.distribuidora}} </div>
-      {%endfor%}
 {%endfor%}
 </div>
 </div>

@@ -165,15 +165,16 @@ class Graf1View(View):
 
     @method_decorator(login_required)
     def get(self, request):
-        clientes = Cliente.objects.all()
-        conta = Conta.objects.all()
-        fatura = Fatura.objects.first()
-        dados_fatura = DadosFatura.objects.all()
+        user = request.user
+        cliente = Cliente.objects.get(user=user)
+        conta = Conta.objects.filter(cliente=cliente)
+        fatura = Fatura.objects.filter(cliente=cliente)
+        dados_fatura = DadosFatura.objects.filter(cliente=cliente)
         return render(
             request,
             self.template_name,
             {
-                "clientes": clientes,
+                "clientes": cliente,
                 "conta": conta,
                 "fatura": fatura,
                 "dados_fatura": dados_fatura,

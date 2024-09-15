@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Login(models.Model):
@@ -11,6 +12,7 @@ class Login(models.Model):
 
 # Create your models here.
 class Cliente(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     nome = models.CharField(max_length=255, blank=True, null=True)
     modalidade = models.CharField(max_length=50, blank=True, null=True)
     distribuidora = models.CharField(max_length=100, blank=True, null=True)
